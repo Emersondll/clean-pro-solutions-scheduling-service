@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: scheduling-service
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: scheduling_service_dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  data:
+    mongodb:
+      host: mongo
+      port: 27017
+      database: scheduling_service_prod
