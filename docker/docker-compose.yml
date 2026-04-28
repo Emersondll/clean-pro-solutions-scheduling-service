@@ -1,15 +1,68 @@
 version: "3.9"
 
 services:
-  mongo:
-    image: mongo:6.0
-    container_name: mongo
-    restart: always
+  scheduling-service:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: scheduling-service
     ports:
-      - "27017:27017"
+      - "8084:8084"
     environment:
-      MONGO_INITDB_DATABASE: schedulingdb
+      MONGO_URI: mongodb://mongo:27017/scheduling_db
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      EUREKA_SERVER_URL: http://host.docker.internal:8761/eureka
+      EUREKA_ENABLED: "true"
+      SERVER_PORT: 8084
+    depends_on:
+      mongo:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - scheduling-net
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8084/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  mongo:
+    image: mongo:7.0
+    container_name: scheduling-mongo
+    ports:
+      - "27021:27017"
     volumes:
-      - mongo_data:/data/db
+      - scheduling-mongo-data:/data/db
+    networks:
+      - scheduling-net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: scheduling-rabbitmq
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    networks:
+      - scheduling-net
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
 volumes:
-  mongo_data:
+  scheduling-mongo-data:
+
+networks:
+  scheduling-net:
+    driver: bridge
