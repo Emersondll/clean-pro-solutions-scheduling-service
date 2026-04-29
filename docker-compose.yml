@@ -1,0 +1,49 @@
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: scheduling-mongo
+    ports:
+      - "27020:27017"
+    networks:
+      - scheduling-net
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: scheduling-rabbitmq
+    ports:
+      - "5674:5672"
+      - "15674:15672"
+    networks:
+      - scheduling-net
+
+  service-registry:
+    build:
+      context: ../clean-pro-solutions-service-registry
+      dockerfile: Dockerfile
+    container_name: scheduling-registry
+    ports:
+      - "8764:8761"
+    networks:
+      - scheduling-net
+
+  scheduling-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scheduling-service
+    ports:
+      - "8084:8084"
+    environment:
+      MONGO_URI: mongodb://mongo:27017/scheduling_db
+      RABBITMQ_HOST: rabbitmq
+      EUREKA_SERVER_URL: http://service-registry:8761/eureka
+    depends_on:
+      - mongo
+      - rabbitmq
+      - service-registry
+    networks:
+      - scheduling-net
+
+networks:
+  scheduling-net:
+    driver: bridge
