@@ -69,4 +69,17 @@ public interface SchedulingService {
      * @return completed scheduling
      */
     SchedulingResponse complete(String id);
+
+    /**
+     * Creates a series of recurring schedulings from a single request.
+     *
+     * <p>The first occurrence is the parent (event published). Subsequent occurrences
+     * are linked via {@code parentSchedulingId} and offset by the recurrence pattern.</p>
+     *
+     * @param request     scheduling details — must have a non-{@code NONE} recurrence pattern
+     * @param occurrences total number of occurrences to generate (including the first)
+     * @return list of created schedulings ordered chronologically
+     * @throws IllegalArgumentException if recurrence pattern is {@code NONE}
+     */
+    List<SchedulingResponse> createRecurring(SchedulingRequest request, int occurrences);
 }

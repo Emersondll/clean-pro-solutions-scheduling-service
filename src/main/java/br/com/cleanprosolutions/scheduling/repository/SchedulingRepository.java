@@ -30,4 +30,12 @@ public interface SchedulingRepository extends MongoRepository<Scheduling, String
      * @return list of schedulings
      */
     List<Scheduling> findByContractorId(String contractorId);
+
+    /**
+     * Finds all child schedulings generated from a recurring parent.
+     *
+     * @param parentSchedulingId the originating scheduling ID
+     * @return list of recurring instances
+     */
+    List<Scheduling> findByParentSchedulingId(String parentSchedulingId);
 }

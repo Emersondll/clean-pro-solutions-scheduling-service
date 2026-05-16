@@ -79,6 +79,20 @@ public class SchedulingController {
         return ResponseEntity.ok(service.update(id, request));
     }
 
+    @PostMapping("/recurring")
+    @Operation(summary = "Create a recurring series of schedulings",
+            description = "Generates `occurrences` schedulings offset by the recurrence pattern. Pattern must not be NONE.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Recurring series created"),
+            @ApiResponse(responseCode = "400", description = "Validation error or NONE pattern")
+    })
+    public ResponseEntity<List<SchedulingResponse>> createRecurring(
+            @Valid @RequestBody final SchedulingRequest request,
+            @org.springframework.web.bind.annotation.RequestParam(defaultValue = "4") final int occurrences) {
+        log.info("POST /schedulings/recurring — pattern: {}, occurrences: {}", request.recurrencePattern(), occurrences);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createRecurring(request, occurrences));
+    }
+
     @PatchMapping("/{id}/cancel")
     @Operation(summary = "Cancel a scheduling")
     public ResponseEntity<SchedulingResponse> cancel(@PathVariable final String id) {
