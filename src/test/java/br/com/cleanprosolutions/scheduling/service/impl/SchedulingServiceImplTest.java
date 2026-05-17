@@ -195,4 +195,54 @@ class SchedulingServiceImplTest {
         assertThatThrownBy(() -> service.cancel("non-existent"))
                 .isInstanceOf(SchedulingNotFoundException.class);
     }
+
+    @Test
+    @DisplayName("shouldCreateRecurringSchedulingsWithWeeklyPattern")
+    void shouldCreateRecurringSchedulingsWithWeeklyPattern() {
+        final Instant start = Instant.now().plus(1, ChronoUnit.DAYS);
+        final Instant end = start.plus(2, ChronoUnit.HOURS);
+        final SchedulingRequest recurringReq = new SchedulingRequest(
+                "client-1", "contractor-1", "service-1", start, end, RecurrencePattern.WEEKLY);
+
+        when(repository.save(any(Scheduling.class))).thenReturn(scheduling);
+
+        final List<SchedulingResponse> results = service.createRecurring(recurringReq, 3);
+
+        assertThat(results).hasSize(3);
+    }
+
+    @Test
+    @DisplayName("shouldThrowWhenCreateRecurringWithNonePattern")
+    void shouldThrowWhenCreateRecurringWithNonePattern() {
+        final SchedulingRequest noneReq = new SchedulingRequest(
+                "client-1", "contractor-1", "service-1",
+                Instant.now().plus(1, ChronoUnit.DAYS),
+                Instant.now().plus(2, ChronoUnit.DAYS),
+                RecurrencePattern.NONE);
+
+        assertThatThrownBy(() -> service.createRecurring(noneReq, 3))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("shouldCreateRecurringWithDailyPattern")
+    void shouldCreateRecurringWithDailyPattern() {
+        final Instant start = Instant.now().plus(1, ChronoUnit.DAYS);
+        final SchedulingRequest req = new SchedulingRequest(
+                "client-1", "contractor-1", "service-1", start, start.plus(1, ChronoUnit.HOURS), RecurrencePattern.DAILY);
+        when(repository.save(any(Scheduling.class))).thenReturn(scheduling);
+
+        assertThat(service.createRecurring(req, 2)).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("shouldCreateRecurringWithMonthlyPattern")
+    void shouldCreateRecurringWithMonthlyPattern() {
+        final Instant start = Instant.now().plus(1, ChronoUnit.DAYS);
+        final SchedulingRequest req = new SchedulingRequest(
+                "client-1", "contractor-1", "service-1", start, start.plus(1, ChronoUnit.HOURS), RecurrencePattern.MONTHLY);
+        when(repository.save(any(Scheduling.class))).thenReturn(scheduling);
+
+        assertThat(service.createRecurring(req, 2)).hasSize(2);
+    }
 }

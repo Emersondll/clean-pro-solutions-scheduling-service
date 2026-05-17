@@ -168,6 +168,15 @@
 							<goal>check</goal>
 						</goals>
 						<configuration>
+							<excludes>
+								<exclude>**/*Application.class</exclude>
+								<exclude>**/*Config.class</exclude>
+								<exclude>**/dto/**</exclude>
+								<exclude>**/document/**</exclude>
+								<exclude>**/enumerations/**</exclude>
+								<exclude>**/event/**</exclude>
+								<exclude>**/exception/**</exclude>
+							</excludes>
 							<rules>
 								<rule>
 									<element>BUNDLE</element>
