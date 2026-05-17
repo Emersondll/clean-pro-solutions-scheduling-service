@@ -20,7 +20,7 @@ import java.time.Instant;
  * @param createdAt           Creation timestamp
  * @param updatedAt           Last update timestamp
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @since 1.0.0
  */
 public record SchedulingResponse(

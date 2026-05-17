@@ -15,7 +15,7 @@ import java.time.Instant;
  * scheduling conflicts. Follows the Builder pattern — use {@link #builder()}
  * or {@link #toBuilder()} to create or transition instances.</p>
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @since 1.0.0
  */
 @Document(collection = "schedulings")

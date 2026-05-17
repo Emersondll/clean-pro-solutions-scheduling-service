@@ -7,7 +7,7 @@ package br.com.cleanprosolutions.scheduling.enumerations;
  * The remaining values drive the offset calculation in
  * {@code SchedulingServiceImpl.createRecurring()}.</p>
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @since 1.0.0
  */
 public enum RecurrencePattern {

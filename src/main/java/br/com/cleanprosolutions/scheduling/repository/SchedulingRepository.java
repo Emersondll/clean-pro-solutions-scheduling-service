@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Repository for {@link Scheduling} document persistence.
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @since 1.0.0
  */
 @Repository

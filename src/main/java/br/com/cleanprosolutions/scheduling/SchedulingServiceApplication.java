@@ -11,7 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * <p>Manages the service appointments for Clean Pro Solutions,
  * exposing a REST API and communicating via RabbitMQ.</p>
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @version 1.0.0
  * @since 1.0.0
  */

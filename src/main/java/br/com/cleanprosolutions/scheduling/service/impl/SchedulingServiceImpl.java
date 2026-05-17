@@ -27,7 +27,7 @@ import java.util.UUID;
  * <p>Manages the scheduling lifecycle. All state transitions produce new immutable
  * {@link Scheduling} instances via the Builder pattern.</p>
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @since 1.0.0
  */
 @Slf4j

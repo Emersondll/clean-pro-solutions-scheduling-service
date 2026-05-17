@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * <p>Configures the exchange to publish {@code ScheduleCreated} events
  * and the JSON message converter.</p>
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @since 1.0.0
  */
 @Configuration

@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
  * <p>Disables CSRF and allows all requests temporarily
  * until the API Gateway and OAuth2 Resource Server are fully integrated.</p>
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @since 1.0.0
  */
 @Configuration

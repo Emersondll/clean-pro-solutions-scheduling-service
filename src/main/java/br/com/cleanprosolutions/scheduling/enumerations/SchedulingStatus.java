@@ -3,7 +3,7 @@ package br.com.cleanprosolutions.scheduling.enumerations;
 /**
  * Status of a service scheduling.
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @since 1.0.0
  */
 public enum SchedulingStatus {

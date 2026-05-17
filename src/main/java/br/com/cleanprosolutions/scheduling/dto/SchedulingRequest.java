@@ -17,7 +17,7 @@ import java.time.Instant;
  * @param endTime           End time of the scheduled service
  * @param recurrencePattern Recurrence rule; defaults to {@link RecurrencePattern#NONE}
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @since 1.0.0
  */
 public record SchedulingRequest(

@@ -15,7 +15,7 @@ import java.time.Instant;
  * @param endTime      End time of the scheduled service
  * @param timestamp    Event creation timestamp
  *
- * @author Clean Pro Solutions Team
+ * @author Emerson Lima
  * @since 1.0.0
  */
 public record ScheduleCreatedEvent(
